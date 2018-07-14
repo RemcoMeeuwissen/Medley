@@ -4,21 +4,23 @@ import { addGoal, addBackbone } from '../actions'
 describe('Goals reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
-      byId: {}
+      byId: {},
+      allIds: []
     })
   })
 
   it('should handle a single ADD_GOAL', () => {
     const addGoalAction = addGoal('Goal description')
 
-    expect(reducer([], addGoalAction)).toEqual({
+    expect(reducer(undefined, addGoalAction)).toEqual({
       byId: {
         [addGoalAction.id]: {
           id: addGoalAction.id,
           goal: addGoalAction.goal,
           backbones: []
         }
-      }
+      },
+      allIds: [addGoalAction.id]
     })
   })
 
@@ -26,7 +28,7 @@ describe('Goals reducer', () => {
     const addGoalAction = addGoal('Goal description')
     const secondAddGoalAction = addGoal('Second goal description')
 
-    const reducerState = reducer([], addGoalAction)
+    const reducerState = reducer(undefined, addGoalAction)
 
     expect(reducer(reducerState, secondAddGoalAction)).toEqual({
       byId: {
@@ -40,7 +42,8 @@ describe('Goals reducer', () => {
           goal: secondAddGoalAction.goal,
           backbones: []
         }
-      }
+      },
+      allIds: [addGoalAction.id, secondAddGoalAction.id]
     })
   })
 
@@ -51,7 +54,7 @@ describe('Goals reducer', () => {
       addGoalAction.id
     )
 
-    const reducerState = reducer([], addGoalAction)
+    const reducerState = reducer(undefined, addGoalAction)
 
     expect(reducer(reducerState, addBackboneAction)).toEqual({
       byId: {
@@ -60,7 +63,8 @@ describe('Goals reducer', () => {
           goal: addGoalAction.goal,
           backbones: [addBackboneAction.id]
         }
-      }
+      },
+      allIds: [addGoalAction.id]
     })
   })
 
@@ -80,7 +84,7 @@ describe('Goals reducer', () => {
       secondAddGoalAction.id
     )
 
-    let reducerState = reducer([], addGoalAction)
+    let reducerState = reducer(undefined, addGoalAction)
     reducerState = reducer(reducerState, secondAddGoalAction)
     reducerState = reducer(reducerState, addBackboneAction)
     reducerState = reducer(reducerState, secondAddBackboneAction)
@@ -97,7 +101,17 @@ describe('Goals reducer', () => {
           goal: secondAddGoalAction.goal,
           backbones: [thirdAddBackboneAction.id]
         }
-      }
+      },
+      allIds: [addGoalAction.id, secondAddGoalAction.id]
+    })
+  })
+
+  it('should ignore a ADD_BACKGROUND with a nonexistent goal', () => {
+    const addBackboneAction = addBackbone('Backbone description', 'none')
+
+    expect(reducer(undefined, addBackboneAction)).toEqual({
+      byId: {},
+      allIds: []
     })
   })
 })

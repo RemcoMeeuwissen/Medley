@@ -11,7 +11,7 @@ describe('Tasks reducer', () => {
   it('should handle a single ADD_TASK', () => {
     const addTaskAction = addTask('Task description')
 
-    expect(reducer([], addTaskAction)).toEqual({
+    expect(reducer(undefined, addTaskAction)).toEqual({
       byId: {
         [addTaskAction.id]: {
           id: addTaskAction.id,
@@ -25,7 +25,7 @@ describe('Tasks reducer', () => {
     const addTaskAction = addTask('Task description')
     const secondAddTaskAction = addTask('Second task description')
 
-    const reducerState = reducer([], addTaskAction)
+    const reducerState = reducer(undefined, addTaskAction)
 
     expect(reducer(reducerState, secondAddTaskAction)).toEqual({
       byId: {

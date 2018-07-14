@@ -4,21 +4,23 @@ import { addBackbone, addTask } from '../actions'
 describe('Backbones reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
-      byId: {}
+      byId: {},
+      allIds: []
     })
   })
 
   it('should handle a single ADD_BACKBONE', () => {
     const addBackboneAction = addBackbone('Backbone description')
 
-    expect(reducer([], addBackboneAction)).toEqual({
+    expect(reducer(undefined, addBackboneAction)).toEqual({
       byId: {
         [addBackboneAction.id]: {
           id: addBackboneAction.id,
           backbone: addBackboneAction.backbone,
           tasks: []
         }
-      }
+      },
+      allIds: [addBackboneAction.id]
     })
   })
 
@@ -26,7 +28,7 @@ describe('Backbones reducer', () => {
     const addBackboneAction = addBackbone('Backbone description')
     const secondAddBackboneAction = addBackbone('Another backbone description')
 
-    const reducerState = reducer([], addBackboneAction)
+    const reducerState = reducer(undefined, addBackboneAction)
 
     expect(reducer(reducerState, secondAddBackboneAction)).toEqual({
       byId: {
@@ -40,7 +42,8 @@ describe('Backbones reducer', () => {
           backbone: secondAddBackboneAction.backbone,
           tasks: []
         }
-      }
+      },
+      allIds: [addBackboneAction.id, secondAddBackboneAction.id]
     })
   })
 
@@ -48,7 +51,7 @@ describe('Backbones reducer', () => {
     const addBackboneAction = addBackbone('Backbone description')
     const addTaskAction = addTask('Task description', addBackboneAction.id)
 
-    const reducerState = reducer([], addBackboneAction)
+    const reducerState = reducer(undefined, addBackboneAction)
 
     expect(reducer(reducerState, addTaskAction)).toEqual({
       byId: {
@@ -57,7 +60,8 @@ describe('Backbones reducer', () => {
           backbone: addBackboneAction.backbone,
           tasks: [addTaskAction.id]
         }
-      }
+      },
+      allIds: [addBackboneAction.id]
     })
   })
 
@@ -74,7 +78,7 @@ describe('Backbones reducer', () => {
       secondAddBackboneAction.id
     )
 
-    let reducerState = reducer([], addBackboneAction)
+    let reducerState = reducer(undefined, addBackboneAction)
     reducerState = reducer(reducerState, secondAddBackboneAction)
     reducerState = reducer(reducerState, addTaskAction)
     reducerState = reducer(reducerState, secondAddTaskAction)
@@ -91,7 +95,17 @@ describe('Backbones reducer', () => {
           backbone: secondAddBackboneAction.backbone,
           tasks: [thirdAddTaskAction.id]
         }
-      }
+      },
+      allIds: [addBackboneAction.id, secondAddBackboneAction.id]
+    })
+  })
+
+  it('should ignore a ADD_TASK with a nonexistent backbone', () => {
+    const addTaskAction = addTask('Task description', 'none')
+
+    expect(reducer(undefined, addTaskAction)).toEqual({
+      byId: {},
+      allIds: []
     })
   })
 })

@@ -1,5 +1,6 @@
 const initialState = {
-  byId: {}
+  byId: {},
+  allIds: []
 }
 
 const goals = (state = initialState, action) => {
@@ -13,18 +14,23 @@ const goals = (state = initialState, action) => {
             goal: action.goal,
             backbones: []
           }
-        }
+        },
+        allIds: [...state['allIds'], action.id]
       }
     case 'ADD_BACKBONE':
-      return {
-        byId: {
-          ...state['byId'],
-          [action.goal]: {
-            ...state['byId'][action.goal],
-            backbones: [...state['byId'][action.goal]['backbones'], action.id]
-          }
+      if (state['allIds'].includes(action.goal)) {
+        return {
+          byId: {
+            ...state['byId'],
+            [action.goal]: {
+              ...state['byId'][action.goal],
+              backbones: [...state['byId'][action.goal]['backbones'], action.id]
+            }
+          },
+          allIds: state['allIds']
         }
       }
+      return state
     default:
       return state
   }

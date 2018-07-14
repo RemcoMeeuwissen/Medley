@@ -1,5 +1,6 @@
 const initialState = {
-  byId: {}
+  byId: {},
+  allIds: []
 }
 
 const backbones = (state = initialState, action) => {
@@ -13,18 +14,23 @@ const backbones = (state = initialState, action) => {
             backbone: action.backbone,
             tasks: []
           }
-        }
+        },
+        allIds: [...state['allIds'], action.id]
       }
     case 'ADD_TASK':
-      return {
-        byId: {
-          ...state['byId'],
-          [action.backbone]: {
-            ...state['byId'][action.backbone],
-            tasks: [...state['byId'][action.backbone]['tasks'], action.id]
-          }
+      if (state['allIds'].includes(action.backbone)) {
+        return {
+          byId: {
+            ...state['byId'],
+            [action.backbone]: {
+              ...state['byId'][action.backbone],
+              tasks: [...state['byId'][action.backbone]['tasks'], action.id]
+            }
+          },
+          allIds: state['allIds']
         }
       }
+      return state
     default:
       return state
   }

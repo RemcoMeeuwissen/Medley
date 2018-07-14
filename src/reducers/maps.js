@@ -1,5 +1,6 @@
 const initialState = {
-  byId: {}
+  byId: {},
+  allIds: []
 }
 
 const maps = (state = initialState, action) => {
@@ -13,18 +14,23 @@ const maps = (state = initialState, action) => {
             name: action.name,
             goals: []
           }
-        }
+        },
+        allIds: [...state['allIds'], action.id]
       }
     case 'ADD_GOAL':
-      return {
-        byId: {
-          ...state['byId'],
-          [action.map]: {
-            ...state['byId'][action.map],
-            goals: [...state['byId'][action.map]['goals'], action.id]
-          }
+      if (state['allIds'].includes(action.map)) {
+        return {
+          byId: {
+            ...state['byId'],
+            [action.map]: {
+              ...state['byId'][action.map],
+              goals: [...state['byId'][action.map]['goals'], action.id]
+            }
+          },
+          allIds: state['allIds']
         }
       }
+      return state
     default:
       return state
   }
