@@ -19,9 +19,9 @@ const maps = (state = initialState, action) => {
       return {
         byId: {
           ...state['byId'],
-          [action.board]: {
-            ...state['byId'][action.board],
-            goals: [...state['byId'][action.board]['goals'], action.id]
+          [action.map]: {
+            ...state['byId'][action.map],
+            goals: [...state['byId'][action.map]['goals'], action.id]
           }
         }
       }

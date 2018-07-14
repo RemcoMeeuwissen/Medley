@@ -3,14 +3,14 @@ import { addGoal } from './GoalActions'
 describe('Goal actions', () => {
   it('should create an action to add a goal', () => {
     const goal = 'Test a goal'
-    const board = 'board-id'
+    const map = 'map-id'
 
-    const action = addGoal(goal, board)
+    const action = addGoal(goal, map)
     const expectedAction = {
       type: 'ADD_GOAL',
       id: action.id,
       goal,
-      board
+      map
     }
 
     expect(action).toEqual(expectedAction)
