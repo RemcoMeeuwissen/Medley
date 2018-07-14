@@ -1,4 +1,8 @@
-const maps = (state = { byId: {} }, action) => {
+const initialState = {
+  byId: {}
+}
+
+const maps = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_MAP':
       return {

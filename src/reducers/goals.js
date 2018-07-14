@@ -1,4 +1,8 @@
-const goals = (state = { byId: {} }, action) => {
+const initialState = {
+  byId: {}
+}
+
+const goals = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_GOAL':
       return {

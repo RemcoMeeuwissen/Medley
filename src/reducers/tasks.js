@@ -1,4 +1,8 @@
-const tasks = (state = { byId: {} }, action) => {
+const initialState = {
+  byId: {}
+}
+
+const tasks = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_TASK':
       return {

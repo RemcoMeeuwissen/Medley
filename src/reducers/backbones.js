@@ -1,4 +1,8 @@
-const backbones = (state = { byId: {} }, action) => {
+const initialState = {
+  byId: {}
+}
+
+const backbones = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_BACKBONE':
       return {
