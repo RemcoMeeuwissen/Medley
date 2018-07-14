@@ -1,3 +1,5 @@
+import types from '../constants'
+
 const initialState = {
   byId: {},
   allIds: []
@@ -5,7 +7,7 @@ const initialState = {
 
 const backbones = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_BACKBONE':
+    case types.ADD_BACKBONE:
       return {
         byId: {
           ...state['byId'],
@@ -17,7 +19,7 @@ const backbones = (state = initialState, action) => {
         },
         allIds: [...state['allIds'], action.id]
       }
-    case 'ADD_TASK':
+    case types.ADD_TASK:
       if (state['allIds'].includes(action.backbone)) {
         return {
           byId: {

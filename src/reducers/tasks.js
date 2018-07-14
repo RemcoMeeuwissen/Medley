@@ -1,10 +1,12 @@
+import types from '../constants'
+
 const initialState = {
   byId: {}
 }
 
 const tasks = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_TASK':
+    case types.ADD_TASK:
       return {
         byId: {
           ...state['byId'],

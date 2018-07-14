@@ -1,4 +1,5 @@
 import { addGoal } from './GoalActions'
+import types from '../constants'
 
 describe('Goal actions', () => {
   it('should create an action to add a goal', () => {
@@ -7,7 +8,7 @@ describe('Goal actions', () => {
 
     const action = addGoal(goal, map)
     const expectedAction = {
-      type: 'ADD_GOAL',
+      type: types.ADD_GOAL,
       id: action.id,
       goal,
       map

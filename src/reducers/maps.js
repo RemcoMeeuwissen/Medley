@@ -1,3 +1,5 @@
+import types from '../constants'
+
 const initialState = {
   byId: {},
   allIds: []
@@ -5,7 +7,7 @@ const initialState = {
 
 const maps = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_MAP':
+    case types.ADD_MAP:
       return {
         byId: {
           ...state['byId'],
@@ -17,7 +19,7 @@ const maps = (state = initialState, action) => {
         },
         allIds: [...state['allIds'], action.id]
       }
-    case 'ADD_GOAL':
+    case types.ADD_GOAL:
       if (state['allIds'].includes(action.map)) {
         return {
           byId: {

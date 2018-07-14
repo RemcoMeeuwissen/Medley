@@ -1,4 +1,5 @@
 import { addTask } from './TaskActions'
+import types from '../constants'
 
 describe('Task actions', () => {
   it('should create an action to add a task', () => {
@@ -7,7 +8,7 @@ describe('Task actions', () => {
 
     const action = addTask(task, backbone)
     const expectedAction = {
-      type: 'ADD_TASK',
+      type: types.ADD_TASK,
       id: action.id,
       task,
       backbone

@@ -1,3 +1,5 @@
+import types from '../constants'
+
 const initialState = {
   byId: {},
   allIds: []
@@ -5,7 +7,7 @@ const initialState = {
 
 const goals = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_GOAL':
+    case types.ADD_GOAL:
       return {
         byId: {
           ...state['byId'],
@@ -17,7 +19,7 @@ const goals = (state = initialState, action) => {
         },
         allIds: [...state['allIds'], action.id]
       }
-    case 'ADD_BACKBONE':
+    case types.ADD_BACKBONE:
       if (state['allIds'].includes(action.goal)) {
         return {
           byId: {
