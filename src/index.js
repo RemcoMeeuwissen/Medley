@@ -2,11 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
+import 'normalize.css'
+import './index.css'
 import App from './components/App'
 import rootReducer from './reducers'
 import registerServiceWorker from './registerServiceWorker'
 
-import './index.css'
 import seedStore from './seed_store'
 
 const store = createStore(
