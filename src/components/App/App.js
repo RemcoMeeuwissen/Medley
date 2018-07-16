@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
-import { ShowMaps } from '../../containers'
+import { ShowMaps, ShowMap } from '../../containers'
 
 const StyledApp = styled.div`
   margin: 1em;
@@ -9,9 +10,12 @@ const StyledApp = styled.div`
 class App extends Component {
   render() {
     return (
-      <StyledApp>
-        <ShowMaps />
-      </StyledApp>
+      <Router>
+        <StyledApp>
+          <Route exact path="/" component={ShowMaps} />
+          <Route path="/map/:id" component={ShowMap} />
+        </StyledApp>
+      </Router>
     )
   }
 }

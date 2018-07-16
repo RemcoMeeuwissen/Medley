@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
 import MapCard from '../MapCard'
@@ -25,7 +26,9 @@ class Maps extends Component {
 
         <StyledMaps>
           {this.props.maps.allIds.map(id => (
-            <MapCard key={id} name={this.props.maps.byId[id].name} />
+            <Link to={'/map/' + id} key={id}>
+              <MapCard name={this.props.maps.byId[id].name} />
+            </Link>
           ))}
         </StyledMaps>
       </div>
