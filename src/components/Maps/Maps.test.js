@@ -1,11 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { shallow } from 'enzyme'
 import Maps from './Maps'
 import mapReducer from '../../reducers/maps'
 
 it('renders without crashing', () => {
-  const div = document.createElement('div')
   const initialState = mapReducer(undefined, {})
-  ReactDOM.render(<Maps maps={initialState} />, div)
-  ReactDOM.unmountComponentAtNode(div)
+  const wrapper = shallow(<Maps maps={initialState} />)
+
+  expect(wrapper).toBeTruthy()
 })

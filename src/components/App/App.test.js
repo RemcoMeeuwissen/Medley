@@ -1,19 +1,17 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { shallow } from 'enzyme'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from '../../reducers'
 import App from './App'
 
 it('renders without crashing', () => {
-  const div = document.createElement('div')
   const store = createStore(rootReducer)
-
-  ReactDOM.render(
+  const wrapper = shallow(
     <Provider store={store}>
       <App />
-    </Provider>,
-    div
+    </Provider>
   )
-  ReactDOM.unmountComponentAtNode(div)
+
+  expect(wrapper).toBeTruthy()
 })

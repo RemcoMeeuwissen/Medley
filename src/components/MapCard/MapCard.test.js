@@ -1,9 +1,8 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { shallow } from 'enzyme'
 import MapCard from './MapCard'
 
 it('renders without crashing', () => {
-  const div = document.createElement('div')
-  ReactDOM.render(<MapCard name="Test" />, div)
-  ReactDOM.unmountComponentAtNode(div)
+  const wrapper = shallow(<MapCard name="Test" />)
+  expect(wrapper).toBeTruthy()
 })
