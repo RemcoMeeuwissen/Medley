@@ -1,3 +1,3 @@
-import Maps from './Maps'
+import ShowMaps from './ShowMaps'
 
-export { Maps }
+export { ShowMaps }
