@@ -47,6 +47,23 @@ describe('Maps reducer', () => {
     })
   })
 
+  it('should ignore ADD_MAPs with duplicate ids', () => {
+    const addMapAction = addMap('Map name')
+
+    let reducerState = reducer(undefined, addMapAction)
+
+    expect(reducer(reducerState, addMapAction)).toEqual({
+      byId: {
+        [addMapAction.id]: {
+          id: addMapAction.id,
+          name: addMapAction.name,
+          goals: []
+        }
+      },
+      allIds: [addMapAction.id]
+    })
+  })
+
   it('should handle a single ADD_GOAL', () => {
     const addMapAction = addMap('Map name')
     const addGoalAction = addGoal('Goal description', addMapAction.id)
@@ -103,6 +120,25 @@ describe('Maps reducer', () => {
     expect(reducer(undefined, addGoalAction)).toEqual({
       byId: {},
       allIds: []
+    })
+  })
+
+  it('should ignore ADD_GOALs with duplicate ids', () => {
+    const addMapAction = addMap('Map name')
+    const addGoalAction = addGoal('Goal description', addMapAction.id)
+
+    let reducerState = reducer(undefined, addMapAction)
+    reducerState = reducer(reducerState, addGoalAction)
+
+    expect(reducer(reducerState, addGoalAction)).toEqual({
+      byId: {
+        [addMapAction.id]: {
+          id: addMapAction.id,
+          name: addMapAction.name,
+          goals: [addGoalAction.id]
+        }
+      },
+      allIds: [addMapAction.id]
     })
   })
 })

@@ -47,6 +47,23 @@ describe('Backbones reducer', () => {
     })
   })
 
+  it('should ignore ADD_BACKBONEs with duplicate ids', () => {
+    const addBackboneAction = addBackbone('Backbone description')
+
+    const reducerState = reducer(undefined, addBackboneAction)
+
+    expect(reducer(reducerState, addBackboneAction)).toEqual({
+      byId: {
+        [addBackboneAction.id]: {
+          id: addBackboneAction.id,
+          backbone: addBackboneAction.backbone,
+          tasks: []
+        }
+      },
+      allIds: [addBackboneAction.id]
+    })
+  })
+
   it('should handle a single ADD_TASK', () => {
     const addBackboneAction = addBackbone('Backbone description')
     const addTaskAction = addTask('Task description', addBackboneAction.id)
@@ -106,6 +123,25 @@ describe('Backbones reducer', () => {
     expect(reducer(undefined, addTaskAction)).toEqual({
       byId: {},
       allIds: []
+    })
+  })
+
+  it('should ignore ADD_TASKs with duplicate ids', () => {
+    const addBackboneAction = addBackbone('Backbone description')
+    const addTaskAction = addTask('Task description', addBackboneAction.id)
+
+    let reducerState = reducer(undefined, addBackboneAction)
+    reducerState = reducer(reducerState, addTaskAction)
+
+    expect(reducer(reducerState, addTaskAction)).toEqual({
+      byId: {
+        [addBackboneAction.id]: {
+          id: addBackboneAction.id,
+          backbone: addBackboneAction.backbone,
+          tasks: [addTaskAction.id]
+        }
+      },
+      allIds: [addBackboneAction.id]
     })
   })
 })

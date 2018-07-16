@@ -47,6 +47,23 @@ describe('Goals reducer', () => {
     })
   })
 
+  it('should ignore ADD_GOALs with duplicate ids', () => {
+    const addGoalAction = addGoal('Goal description')
+
+    const reducerState = reducer(undefined, addGoalAction)
+
+    expect(reducer(reducerState, addGoalAction)).toEqual({
+      byId: {
+        [addGoalAction.id]: {
+          id: addGoalAction.id,
+          goal: addGoalAction.goal,
+          backbones: []
+        }
+      },
+      allIds: [addGoalAction.id]
+    })
+  })
+
   it('should handle a single ADD_BACKBONE', () => {
     const addGoalAction = addGoal('Goal description')
     const addBackboneAction = addBackbone(
@@ -112,6 +129,28 @@ describe('Goals reducer', () => {
     expect(reducer(undefined, addBackboneAction)).toEqual({
       byId: {},
       allIds: []
+    })
+  })
+
+  it('should ignore ADD_BACKBONEs with duplicate ids', () => {
+    const addGoalAction = addGoal('Goal description')
+    const addBackboneAction = addBackbone(
+      'Backbone description',
+      addGoalAction.id
+    )
+
+    let reducerState = reducer(undefined, addGoalAction)
+    reducerState = reducer(reducerState, addBackboneAction)
+
+    expect(reducer(reducerState, addBackboneAction)).toEqual({
+      byId: {
+        [addGoalAction.id]: {
+          id: addGoalAction.id,
+          goal: addGoalAction.goal,
+          backbones: [addBackboneAction.id]
+        }
+      },
+      allIds: [addGoalAction.id]
     })
   })
 })

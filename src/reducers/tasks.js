@@ -9,7 +9,7 @@ const tasks = (state = initialState, action) => {
     case types.ADD_TASK:
       return {
         byId: {
-          ...state['byId'],
+          ...state.byId,
           [action.id]: {
             id: action.id,
             task: action.task
