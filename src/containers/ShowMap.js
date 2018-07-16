@@ -15,3 +15,4 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default connect(mapStateToProps)(Map)
+export { mapStateToProps }
